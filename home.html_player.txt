@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Player App</title>
+</head>
+<body>
+    <a href="{% url 'home' %}">Home</a> | <a href="{% url 'welcome' %}">Welcome</a>
+    <hr>
+    
+    <h2>All Players</h2>
+    
+    <form method="GET" action="{% url 'home' %}">
+        <input type="text" name="search" placeholder="Search by name" >
+        <button type="submit">Search</button>
+    </form>
+    
+    <a href="{% url 'add_player' %}">Add New Player</a>
+    <br><br>
+
+    {% if players %}
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Test Innings</th>
+                <th>Runs</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+            <tr>
+                <td>{{ player.name }}</td>
+                <td>{{ player.test_innings }}</td>
+                <td>{{ player.runs }}</td>
+                <td>
+                    <a href="{% url 'edit_player' player.pk %}">Edit</a> | 
+                    <a href="{% url 'delete_player' player.pk %}" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <h3>No Player Found</h3>
+    {% endif %}
+</body>
+</html>
